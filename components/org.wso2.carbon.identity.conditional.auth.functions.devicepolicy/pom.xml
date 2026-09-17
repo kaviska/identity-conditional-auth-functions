@@ -103,7 +103,6 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
             <artifactId>org.wso2.carbon.identity.central.log.mgt</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.identity.conditional.auth.functions</groupId>
@@ -119,7 +118,7 @@
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.utils</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database.wso2</groupId>
@@ -157,9 +156,12 @@
                             org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.base;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.application.authentication.framework.context;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.application.authentication.framework.util;version="${carbon.identity.package.import.version.range}",
+                            org.wso2.carbon.identity.central.log.mgt.utils;version="${carbon.identity.package.import.version.range}",
+                            org.wso2.carbon.identity.device.policy.api.constant;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.device.policy.api.exception;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.device.policy.api.model;version="${carbon.identity.package.import.version.range}",
-                            org.wso2.carbon.identity.device.policy.api.service;version="${carbon.identity.package.import.version.range}"
+                            org.wso2.carbon.identity.device.policy.api.service;version="${carbon.identity.package.import.version.range}",
+                            org.wso2.carbon.utils;version="${carbon.kernel.package.import.version.range}"
                         </Import-Package>
                         <DynamicImport-Package>
                             org.graalvm.polyglot

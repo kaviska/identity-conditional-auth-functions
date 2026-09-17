@@ -43,6 +43,7 @@ import org.wso2.carbon.identity.conditional.auth.functions.devicepolicy.internal
 import org.wso2.carbon.identity.conditional.auth.functions.test.utils.sequence.JsSequenceHandlerAbstractTest;
 import org.wso2.carbon.identity.conditional.auth.functions.test.utils.sequence.JsTestException;
 import org.wso2.carbon.identity.core.util.IdentityTenantUtil;
+import org.wso2.carbon.identity.device.policy.api.constant.DevicePolicyErrorMessage;
 import org.wso2.carbon.identity.device.policy.api.exception.DevicePolicyClientException;
 import org.wso2.carbon.identity.device.policy.api.exception.DevicePolicyServerException;
 import org.wso2.carbon.identity.device.policy.api.model.DevicePolicyEvaluationResult;
@@ -134,8 +135,6 @@ public class DevicePolicyComplianceFunctionImplTest extends JsSequenceHandlerAbs
                         Collections.singletonList("osVersion")), "osVersion"},
                 {DevicePolicyEvaluationResult.incompleteDeviceData(POLICY_NAME,
                         Arrays.asList("osVersion", "platform")), "osVersion, platform"},
-                // A missing policy is reported against the policy name resolved by the evaluator.
-                {DevicePolicyEvaluationResult.policyNotFound(POLICY_NAME), POLICY_NAME + ":policy_not_found"},
         };
     }
 
@@ -189,7 +188,11 @@ public class DevicePolicyComplianceFunctionImplTest extends JsSequenceHandlerAbs
     public Object[][] evaluationFailureProvider() {
 
         return new Object[][]{
-                // Client side failures are reported as a policy error.
+                // A missing policy is distinguished by its error code.
+                {new DevicePolicyClientException("Device policy not found.", "Device policy not found.",
+                        DevicePolicyErrorMessage.ERROR_DEVICE_POLICY_NOT_FOUND.getCode()),
+                        POLICY_NAME + ":policy_not_found"},
+                // Any other client side failure is reported as a policy error.
                 {new DevicePolicyClientException("Invalid policy.", "Invalid policy.", "DP-60001"),
                         POLICY_NAME + ":policy_error"},
                 // Any other device policy failure is reported as an evaluation error.
