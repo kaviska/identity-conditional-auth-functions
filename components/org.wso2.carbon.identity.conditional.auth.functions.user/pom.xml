@@ -110,7 +110,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.graalvm.sdk</groupId>
+            <groupId>org.wso2.orbit.graalvm.sdk</groupId>
             <artifactId>graal-sdk</artifactId>
             <scope>provided</scope>
         </dependency>

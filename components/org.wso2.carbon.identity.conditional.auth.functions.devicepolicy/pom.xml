@@ -31,28 +31,6 @@
     <name>Conditional Authentication - Device Policy Compliance Function</name>
     <packaging>bundle</packaging>
 
-    <!--
-        NOTE: org.wso2.carbon.identity.device.policy and the build of
-        org.wso2.carbon.identity.application.authentication.framework carrying
-        FrameworkConstants.DEVICE_DATA and the device.* SPI package only exist in
-        carbon-identity-framework's still-unmerged device-policy / auth-framework branches,
-        not in the 7.10.0 line this repo otherwise targets. This module therefore builds and
-        tests against a locally-built SNAPSHOT of that framework until those branches merge
-        and a real release carries them.
-    -->
-    <properties>
-        <!--
-            Overriding the two inherited version properties, rather than pinning artifact by
-            artifact, keeps the whole framework and kernel stack on one consistent build. Mixing
-            them breaks at runtime on internals that moved between the two lines (for instance
-            BaseCache.addToCacheOnRead and javax.cache Cache.putOnRead, both reached through claim
-            handling during script execution). Both overrides go away once the device policy
-            branches merge and this module can go back to the shared properties.
-        -->
-        <carbon.identity.framework.version>7.11.110-SNAPSHOT</carbon.identity.framework.version>
-        <carbon.kernel.version>4.12.22</carbon.kernel.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.wso2.org.ops4j.pax.logging</groupId>
@@ -61,18 +39,6 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
             <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
-            <exclusions>
-                <!--
-                    This framework build ships GraalVM 25.x, where the polyglot API lives in
-                    org.graalvm.polyglot:polyglot. The root POM still manages org.graalvm.sdk:graal-sdk
-                    at ${graalvm.version} (22.3.4), whose jar carries the old copy of the same
-                    org.graalvm.polyglot classes and shadows the 25.x API at test runtime.
-                -->
-                <exclusion>
-                    <groupId>org.graalvm.sdk</groupId>
-                    <artifactId>graal-sdk</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
